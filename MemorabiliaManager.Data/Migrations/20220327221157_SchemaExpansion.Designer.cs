@@ -4,6 +4,7 @@ using MemorabiliaManager.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace MemorabiliaManager.Data.Migrations
 {
     [DbContext(typeof(MemorabiliaManagerContext))]
-    partial class MemorabiliaManagerContextModelSnapshot : ModelSnapshot
+    [Migration("20220327221157_SchemaExpansion")]
+    partial class SchemaExpansion
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -30,19 +32,35 @@ namespace MemorabiliaManager.Data.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
-                    b.Property<string>("Category")
-                        .IsRequired()
-                        .HasMaxLength(100)
-                        .HasColumnType("nvarchar(100)");
+                    b.Property<int>("EntertainmentCategoryId")
+                        .HasColumnType("int");
 
                     b.Property<string>("Name")
                         .IsRequired()
-                        .HasMaxLength(100)
-                        .HasColumnType("nvarchar(100)");
+                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 
+                    b.HasIndex("EntertainmentCategoryId");
+
                     b.ToTable("Entertainment");
+                });
+
+            modelBuilder.Entity("MemorabiliaManager.Domain.EntertainmentCategory", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("EntertainmentCategories");
                 });
 
             modelBuilder.Entity("MemorabiliaManager.Domain.Image", b =>
@@ -59,8 +77,7 @@ namespace MemorabiliaManager.Data.Migrations
 
                     b.Property<string>("FileName")
                         .IsRequired()
-                        .HasMaxLength(100)
-                        .HasColumnType("nvarchar(100)");
+                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 
@@ -86,14 +103,18 @@ namespace MemorabiliaManager.Data.Migrations
 
                     b.Property<string>("Name")
                         .IsRequired()
-                        .HasMaxLength(100)
-                        .HasColumnType("nvarchar(100)");
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int?>("SignatureId")
+                        .HasColumnType("int");
 
                     b.HasKey("Id");
 
                     b.HasIndex("EntertainmentId");
 
                     b.HasIndex("ItemCategoryId");
+
+                    b.HasIndex("SignatureId");
 
                     b.ToTable("Items");
                 });
@@ -184,6 +205,28 @@ namespace MemorabiliaManager.Data.Migrations
                     b.ToTable("ItemSubjects");
                 });
 
+            modelBuilder.Entity("MemorabiliaManager.Domain.JerseyNumber", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<short>("Number")
+                        .HasColumnType("smallint");
+
+                    b.Property<int>("SignatureId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("SignatureId")
+                        .IsUnique();
+
+                    b.ToTable("JerseyNumbers");
+                });
+
             modelBuilder.Entity("MemorabiliaManager.Domain.Signature", b =>
                 {
                     b.Property<int>("Id")
@@ -192,25 +235,16 @@ namespace MemorabiliaManager.Data.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
-                    b.Property<string>("AuthenticationNumber")
-                        .HasMaxLength(15)
-                        .HasColumnType("nvarchar(15)");
-
                     b.Property<int>("EntertainmentId")
                         .HasColumnType("int");
 
                     b.Property<string>("FirstName")
                         .IsRequired()
-                        .HasMaxLength(15)
-                        .HasColumnType("nvarchar(15)");
-
-                    b.Property<short?>("JerseyNumber")
-                        .HasColumnType("smallint");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("LastName")
                         .IsRequired()
-                        .HasMaxLength(20)
-                        .HasColumnType("nvarchar(20)");
+                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 
@@ -232,14 +266,24 @@ namespace MemorabiliaManager.Data.Migrations
 
                     b.Property<string>("Name")
                         .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
+                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 
                     b.HasIndex("EntertainmentId");
 
                     b.ToTable("Subjects");
+                });
+
+            modelBuilder.Entity("MemorabiliaManager.Domain.Entertainment", b =>
+                {
+                    b.HasOne("MemorabiliaManager.Domain.EntertainmentCategory", "EntertainmentCategory")
+                        .WithMany("Entertainment")
+                        .HasForeignKey("EntertainmentCategoryId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("EntertainmentCategory");
                 });
 
             modelBuilder.Entity("MemorabiliaManager.Domain.Item", b =>
@@ -256,9 +300,15 @@ namespace MemorabiliaManager.Data.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
+                    b.HasOne("MemorabiliaManager.Domain.Signature", "Signature")
+                        .WithMany()
+                        .HasForeignKey("SignatureId");
+
                     b.Navigation("Entertainment");
 
                     b.Navigation("ItemCategory");
+
+                    b.Navigation("Signature");
                 });
 
             modelBuilder.Entity("MemorabiliaManager.Domain.ItemImage", b =>
@@ -283,7 +333,7 @@ namespace MemorabiliaManager.Data.Migrations
             modelBuilder.Entity("MemorabiliaManager.Domain.ItemSignature", b =>
                 {
                     b.HasOne("MemorabiliaManager.Domain.Item", "Item")
-                        .WithMany("Signatures")
+                        .WithMany()
                         .HasForeignKey("ItemId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -318,6 +368,17 @@ namespace MemorabiliaManager.Data.Migrations
                     b.Navigation("Subject");
                 });
 
+            modelBuilder.Entity("MemorabiliaManager.Domain.JerseyNumber", b =>
+                {
+                    b.HasOne("MemorabiliaManager.Domain.Signature", "Signature")
+                        .WithOne("JerseyNumber")
+                        .HasForeignKey("MemorabiliaManager.Domain.JerseyNumber", "SignatureId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Signature");
+                });
+
             modelBuilder.Entity("MemorabiliaManager.Domain.Signature", b =>
                 {
                     b.HasOne("MemorabiliaManager.Domain.Entertainment", "Entertainment")
@@ -349,6 +410,11 @@ namespace MemorabiliaManager.Data.Migrations
                     b.Navigation("Subjects");
                 });
 
+            modelBuilder.Entity("MemorabiliaManager.Domain.EntertainmentCategory", b =>
+                {
+                    b.Navigation("Entertainment");
+                });
+
             modelBuilder.Entity("MemorabiliaManager.Domain.Image", b =>
                 {
                     b.Navigation("Items");
@@ -357,8 +423,6 @@ namespace MemorabiliaManager.Data.Migrations
             modelBuilder.Entity("MemorabiliaManager.Domain.Item", b =>
                 {
                     b.Navigation("Images");
-
-                    b.Navigation("Signatures");
 
                     b.Navigation("Subjects");
                 });
@@ -371,6 +435,8 @@ namespace MemorabiliaManager.Data.Migrations
             modelBuilder.Entity("MemorabiliaManager.Domain.Signature", b =>
                 {
                     b.Navigation("Items");
+
+                    b.Navigation("JerseyNumber");
                 });
 
             modelBuilder.Entity("MemorabiliaManager.Domain.Subject", b =>
