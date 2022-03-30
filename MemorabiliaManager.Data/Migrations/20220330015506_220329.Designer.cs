@@ -4,6 +4,7 @@ using MemorabiliaManager.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace MemorabiliaManager.Data.Migrations
 {
     [DbContext(typeof(MemorabiliaManagerContext))]
-    partial class MemorabiliaManagerContextModelSnapshot : ModelSnapshot
+    [Migration("20220330015506_220329")]
+    partial class _220329
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -191,10 +193,6 @@ namespace MemorabiliaManager.Data.Migrations
                         .HasColumnType("int");
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
-
-                    b.Property<string>("AuthenticationNumber")
-                        .HasMaxLength(15)
-                        .HasColumnType("nvarchar(15)");
 
                     b.Property<int>("EntertainmentId")
                         .HasColumnType("int");

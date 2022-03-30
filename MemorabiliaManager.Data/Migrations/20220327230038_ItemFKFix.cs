@@ -8,17 +8,17 @@ namespace MemorabiliaManager.Data.Migrations
 	{
 		protected override void Up(MigrationBuilder migrationBuilder)
 		{
-			migrationBuilder.DropForeignKey(
-				name: "FK_Items_Signatures_SignatureId",
-				table: "Items");
+			//migrationBuilder.DropForeignKey(
+			//	name: "FK_Items_Signatures_SignatureId",
+			//	table: "Items");
 
-			migrationBuilder.DropIndex(
-				name: "IX_Items_SignatureId",
-				table: "Items");
+			//migrationBuilder.DropIndex(
+			//	name: "IX_Items_SignatureId",
+			//	table: "Items");
 
-			migrationBuilder.DropColumn(
-				name: "SignatureId",
-				table: "Items");
+			//migrationBuilder.DropColumn(
+			//	name: "SignatureId",
+			//	table: "Items");
 		}
 
 		protected override void Down(MigrationBuilder migrationBuilder)
