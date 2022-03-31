@@ -13,6 +13,7 @@ namespace MemorabiliaManager.Data
 		public DbSet<ItemSubject> ItemSubjects { get; set; }
 		public DbSet<Signature> Signatures { get; set; }
 		public DbSet<Subject> Subjects { get; set; }
+		public DbSet<Authentication> Authentications { get; set; }
 
 		//Temp override, this is considered poor practice
 		protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
