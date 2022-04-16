@@ -11,7 +11,9 @@ namespace MemorabiliaManager.Domain
 		[Required]
 		[StringLength(20)]
 		public string AuthenticationCode { get; set; } = string.Empty;
+		[Required]
 		public Item Item { get; set; } = new Item();
+		[Required]
 		public Signature Signature { get; set; } = new Signature();
 		public int ItemId { get; set; } = 0;
 		public int SignatureId { get; set; } = 0;

@@ -10,7 +10,7 @@ namespace MemorabiliaManager.Domain
 		public string Name { get; set; } = string.Empty;
 		[Required]
 		public Entertainment Entertainment { get; set; } = new Entertainment();
-		public List<ItemSubject> Items { get; set; } = new List<ItemSubject>();
+		public List<Item> Items { get; set; } = new List<Item>();
 		public int EntertainmentId { get; set; } = 0;
 	}
 }

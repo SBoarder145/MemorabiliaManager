@@ -10,6 +10,7 @@ namespace MemorabiliaManager.Domain
 		public string FileName { get; set; } = string.Empty;
 		[Required]
 		public string ByteArray { get; set; } = string.Empty;
-		public List<ItemImage> Items { get; set; } = new List<ItemImage>();
+		public List<Item> Items { get; set; } = new List<Item>();
+		public string Notes { get; set; } = string.Empty;
 	}
 }

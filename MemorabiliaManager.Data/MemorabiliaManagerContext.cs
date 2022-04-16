@@ -9,8 +9,6 @@ namespace MemorabiliaManager.Data
 		public DbSet<Image> Images { get; set; }
 		public DbSet<Item> Items { get; set; }
 		public DbSet<ItemCategory> ItemCategories { get; set; }
-		public DbSet<ItemSignature> ItemSignatures { get; set; }
-		public DbSet<ItemSubject> ItemSubjects { get; set; }
 		public DbSet<Signature> Signatures { get; set; }
 		public DbSet<Subject> Subjects { get; set; }
 		public DbSet<Authentication> Authentications { get; set; }

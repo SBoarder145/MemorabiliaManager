@@ -11,6 +11,7 @@ namespace MemorabiliaManager.Domain
 		[Required]
 		[StringLength(100)]
 		public string Category { get; set; } = string.Empty;
+		public bool IsSportTeam { get; set; } = false;
 		public List<Item> Items { get; set; } = new List<Item>();
 		public List<Subject> Subjects { get; set; } = new List<Subject>();
 		public List<Signature>? Signatures { get; set; } = new List<Signature>();

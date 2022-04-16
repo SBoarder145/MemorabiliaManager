@@ -14,7 +14,7 @@ namespace MemorabiliaManager.Domain
 		[Range(1, 99)]
 		public short? JerseyNumber { get; set; } = null;
 		public Entertainment Entertainment { get; set; } = new Entertainment();
-		public List<ItemSignature> Items { get; set; } = new List<ItemSignature>();
+		public List<Item> Items { get; set; } = new List<Item>();
 		public int EntertainmentId { get; set; } = 0;
 	}
 }
