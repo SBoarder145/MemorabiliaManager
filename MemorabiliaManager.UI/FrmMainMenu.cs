@@ -1,3 +1,5 @@
+using MemorabiliaManager.UI.Maintenance;
+
 namespace MemorabiliaManager
 {
 	public partial class FrmMainMenu : Form
@@ -19,7 +21,8 @@ namespace MemorabiliaManager
 
 		private void btnMaintenance_Click(object sender, EventArgs e)
 		{
-			MessageBox.Show("Not implemented yet", "Pending", MessageBoxButtons.OK, MessageBoxIcon.Error);
+			var form = new FrmMaintenance();
+			form.Show();
 		}
 
 		private void btnAddItem_Click(object sender, EventArgs e)
