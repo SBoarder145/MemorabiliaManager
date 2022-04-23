@@ -2,7 +2,7 @@
 
 namespace MemorabiliaManager.Domain
 {
-	public class Signature
+	public class Signature : IEquatable<Signature>
 	{
 		public int Id { get; set; }
 		[Required]
@@ -14,7 +14,24 @@ namespace MemorabiliaManager.Domain
 		[Range(1, 99)]
 		public short? JerseyNumber { get; set; } = null;
 		public Entertainment Entertainment { get; set; } = new Entertainment();
-		public List<ItemSignature> Items { get; set; } = new List<ItemSignature>();
+		public List<Item> Items { get; set; } = new List<Item>();
 		public int EntertainmentId { get; set; } = 0;
+
+		#region IEquatable Methods
+		public override bool Equals(object? obj)
+		{
+			return Equals(obj as Signature);
+		}
+
+		public bool Equals(Signature? other)
+		{
+			return other != null && ReferenceEquals(this, other);
+		}
+
+		public override int GetHashCode()
+		{
+			return Id;
+		}
+		#endregion
 	}
 }

@@ -2,24 +2,21 @@
 
 namespace MemorabiliaManager.Domain
 {
-	public class Subject : IEquatable<Subject>
+	public class EntertainmentCategory : IEquatable<EntertainmentCategory>
 	{
 		public int Id { get; set; }
 		[Required]
-		[StringLength(50)]
+		[StringLength(10)]
 		public string Name { get; set; } = string.Empty;
-		[Required]
-		public Entertainment Entertainment { get; set; } = new Entertainment();
-		public List<Item> Items { get; set; } = new List<Item>();
-		public int EntertainmentId { get; set; } = 0;
+		public bool IsSport { get; set; } = false;
 
 		#region IEquatable Methods
 		public override bool Equals(object? obj)
 		{
-			return Equals(obj as Subject);
+			return Equals(obj as EntertainmentCategory);
 		}
 
-		public bool Equals(Subject? other)
+		public bool Equals(EntertainmentCategory? other)
 		{
 			return other != null && ReferenceEquals(this, other);
 		}
