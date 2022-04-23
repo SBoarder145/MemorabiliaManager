@@ -4,6 +4,7 @@ using MemorabiliaManager.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace MemorabiliaManager.Data.Migrations
 {
     [DbContext(typeof(MemorabiliaManagerContext))]
-    partial class MemorabiliaManagerContextModelSnapshot : ModelSnapshot
+    [Migration("20220422021026_EntCat_AuthService")]
+    partial class EntCat_AuthService
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -133,6 +135,9 @@ namespace MemorabiliaManager.Data.Migrations
                     b.Property<int>("EntertainmentCategoryId")
                         .HasColumnType("int");
 
+                    b.Property<bool>("IsSportTeam")
+                        .HasColumnType("bit");
+
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasMaxLength(100)
@@ -152,9 +157,6 @@ namespace MemorabiliaManager.Data.Migrations
                         .HasColumnType("int");
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
-
-                    b.Property<bool>("IsSport")
-                        .HasColumnType("bit");
 
                     b.Property<string>("Name")
                         .IsRequired()
