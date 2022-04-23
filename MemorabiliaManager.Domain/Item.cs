@@ -2,7 +2,7 @@
 
 namespace MemorabiliaManager.Domain
 {
-	public class Item
+	public class Item : IEquatable<Item>
 	{
 		public int Id { get; set; }
 		[Required]
@@ -17,5 +17,22 @@ namespace MemorabiliaManager.Domain
 		public int EntertainmentId { get; set; } = 0;
 		public int ItemCategoryId { get; set; } = 0;
 		public string Notes { get; set; } = string.Empty;
+
+		#region IEquatable Methods
+		public override bool Equals(object? obj)
+		{
+			return Equals(obj as Item);
+		}
+
+		public bool Equals(Item? other)
+		{
+			return other != null && ReferenceEquals(this, other);
+		}
+
+		public override int GetHashCode()
+		{
+			return Id;
+		}
+		#endregion
 	}
 }
